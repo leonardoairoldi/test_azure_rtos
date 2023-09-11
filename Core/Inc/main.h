@@ -58,6 +58,7 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 #define MEMORY_POOL_TOTAL_SIZE 2048
+#define TRACEX_BUFFER_SIZE 64000
 #define LEDG_Pin GPIO_PIN_0
 #define LEDG_GPIO_Port GPIOB
 #define LEDR_Pin GPIO_PIN_14

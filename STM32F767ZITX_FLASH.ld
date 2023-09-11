@@ -127,6 +127,7 @@ SECTIONS
     PROVIDE_HIDDEN (__fini_array_end = .);
     . = ALIGN(4);
   } >FLASH
+  
 
   /* Used by the startup to initialize data */
   _sidata = LOADADDR(.data);
@@ -182,4 +183,5 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
+  
 }

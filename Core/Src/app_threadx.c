@@ -45,6 +45,8 @@
 /* USER CODE BEGIN PV */
 TX_THREAD threadG_handle;
 TX_THREAD threadB_handle;
+
+uint8_t tracex_buffer[TRACEX_BUFFER_SIZE] __attribute__ ((section(".trace")));
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,6 +71,8 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE BEGIN App_ThreadX_Init */
 
   CHAR *pointer;
+
+  tx_trace_enable(&tracex_buffer, TRACEX_BUFFER_SIZE, 30);
 
     /* Allocate the stack for ThreadG.  */
     if ((ret = tx_byte_allocate(byte_pool, (VOID **) &pointer,
