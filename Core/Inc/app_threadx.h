@@ -30,7 +30,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "threadG.h"
+#include "threadB.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -61,7 +62,7 @@ void MX_ThreadX_Init(void);
 
 #define THREADG_PRIO                             5
 #define THREADG_PREEMPTION_THRESHOLD          	 THREADG_PRIO
-#define THREADB_PRIO                             10
+#define THREADB_PRIO                             1
 #define THREADB_PREEMPTION_THRESHOLD          	 THREADB_PRIO
 #define THREADR_PRIO                             15
 #define THREADR_PREEMPTION_THRESHOLD          	 THREADR_PRIO

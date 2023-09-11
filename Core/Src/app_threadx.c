@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "threadG.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 TX_THREAD threadG_handle;
+TX_THREAD threadB_handle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,20 +71,36 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   CHAR *pointer;
 
     /* Allocate the stack for ThreadG.  */
-    if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
-                         APP_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
+    if ((ret = tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                         APP_STACK_SIZE, TX_NO_WAIT)) != TX_SUCCESS)
     {
-      ret = TX_POOL_ERROR;
+    	Error_Handler();
     }
 
-    /* Create MainThread.  */
-    if (tx_thread_create(&threadG_handle, "Green LED Thread", threadG_entry, 0,
+    /* Create ThreadG.  */
+    if ((ret = tx_thread_create(&threadG_handle, "ThreadG", threadG_entry, 0,
                          pointer, APP_STACK_SIZE,
                          THREADG_PRIO, THREADG_PREEMPTION_THRESHOLD,
-                         TX_NO_TIME_SLICE, TX_AUTO_START) != TX_SUCCESS)
+                         TX_NO_TIME_SLICE, TX_AUTO_START)) != TX_SUCCESS)
     {
-      ret = TX_THREAD_ERROR;
+    	Error_Handler();
     }
+
+    /* Allocate the stack for ThreadB.  */
+    if ((ret = tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                             APP_STACK_SIZE, TX_NO_WAIT)) != TX_SUCCESS)
+    {
+        Error_Handler();
+    }
+    /* Create ThreadB.  */
+    if ((ret = tx_thread_create(&threadB_handle, "ThreadB", threadB_entry, 0,
+                         pointer, APP_STACK_SIZE,
+                         THREADB_PRIO, THREADB_PREEMPTION_THRESHOLD,
+                         TX_NO_TIME_SLICE, TX_AUTO_START)) != TX_SUCCESS)
+    {
+    	Error_Handler();
+    }
+
 
   /* USER CODE END App_ThreadX_Init */
 
