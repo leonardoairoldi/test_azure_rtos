@@ -136,6 +136,12 @@ SECTIONS
     *(.trace)
   } >RAM
   
+  .timtickspace :
+  {
+  	. = ALIGN(4);
+  	*(.timtickspace)
+  } >RAM
+  
 
   /* Used by the startup to initialize data */
   _sidata = LOADADDR(.data);

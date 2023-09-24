@@ -47,6 +47,7 @@ TX_THREAD threadG_handle;
 TX_THREAD threadB_handle;
 
 uint8_t tracex_buffer[TRACEX_BUFFER_SIZE] __attribute__ ((section(".trace")));
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

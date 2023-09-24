@@ -44,6 +44,14 @@
 
 TIM_HandleTypeDef htim7;
 
+/* Timtick space
+/*
+ * Copy of uwTicks
+ * Stored on a fixed address
+ *
+ */
+uint32_t timtick __attribute__ ((section(".timtickspace")));
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -52,8 +60,10 @@ TIM_HandleTypeDef htim7;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM7_Init(void);
+
 /* USER CODE BEGIN PFP */
 
+void HAL_IncTick(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -218,7 +228,32 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+void HAL_IncTick(void) {
+	uwTick += uwTickFreq;
+	timtick = uwTick;
+}
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM6) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
